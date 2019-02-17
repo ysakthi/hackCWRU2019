@@ -6,7 +6,7 @@ import spacy
 from textstat.textstat import textstatistics, easy_word_set, legacy_round
 import math
 
-def complexity_scores(text):
+def score(text):
     # Splits the text into sentences, using
     # Spacy's sentence segmentation which can
     # be found at https://spacy.io/usage/spacy-101
@@ -109,25 +109,7 @@ def complexity_scores(text):
         per_diff_words = (difficult_words(text) / word_count(text) * 100) + 5
         grade = 0.4 * (avg_sentence_length(text) + per_diff_words)
         return grade
-    fog_score = (gunning_fog(text))/30
-
-    def smog_index(text):
-        """
-            Implements SMOG Formula / Grading
-            SMOG grading = 3 + ?polysyllable count.
-            Here,
-               polysyllable count = number of words of more
-              than two syllables in a sample of 30 sentences.
-        """
-
-        if sentence_count(text) >= 3:
-            poly_syllab = poly_syllable_count(text)
-            SMOG = (1.043 * (30*(poly_syllab / sentence_count(text)))**0.5) \
-                    + 3.1291
-            return legacy_round(SMOG, 1)
-        else:
-            return 0
-    #print(smog_index(text))
+    #fog_score = (gunning_fog(text))/30
 
     def dale_chall_readability_score(text):
         """
@@ -161,11 +143,6 @@ def complexity_scores(text):
             raw_score += 3.6365
 
         return legacy_round(raw_score, 2)
-    dale_score = dale_chall_readability_score(text)/13
+    #dale_score = dale_chall_readability_score(text)/13
 
-    agg_score = (flesch_score + dale_score + fog_score) / 3
-    print(agg_score)
-    return agg_score
-
-complexity_scores("If, for a while, the ruse of desire is calculable for the uses of discipline, soon the repetition of guilt, justification, pseudo-scientific theories, superstition, spurious authorities and classification can be seen as the desperate effort to 'normalise' normally the disturbance of a discourse of splitting that violates the rational enlightened claims of its enunciatory modality.")
-complexity_scores("I eat.")
+    return flesch_score
