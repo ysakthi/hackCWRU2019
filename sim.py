@@ -33,3 +33,5 @@ def cos_similarity(textlist):
 def get_score(original, generated):
     doc = [original, generated]
     return cos_similarity(doc)[0][1]
+
+print(get_score("hi", "hi"))

@@ -20,12 +20,15 @@ txt = Entry(top_frame,width=100)
 txt.pack()
 
 def sub_click():
-    result = round(complexity.score(txt.get()) * 0.3 + translate.get_similarity_score(txt.get()) * 0.7, 3)
+    c_sc = complexity.score(txt.get()) * 0.5
+    print(txt.get())
+    s_sc = translate.get_similarity_score(txt.get()) * 0.5
+    result = round(c_sc + s_sc, 3)
     texts.append((txt.get(), result))
-    result_lbl = Label(top_frame, text=result).pack()
+    result_lbl = Label(top_frame, text=str(s_sc) + "\t and \t" + str(round(c_sc, 2))).pack()
 
 def clicked():
-    lbl = Label(top_frame, text="Your total score based on similarity and complexity is").pack()
+    lbl = Label(top_frame, text="Your similarity and complexity scores are:").pack()
     sub_click()
 
 
